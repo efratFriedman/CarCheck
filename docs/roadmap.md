@@ -27,7 +27,7 @@ Pure logic (storage, validation, progress, summary, share encoding) lives in fra
 |---|---|---|---|---|
 | 0 | Repo docs and workflow | — | — | Done |
 | 1 | Toolchain | 0 | OQ8 | Done |
-| 2 | App shell and deploy | 1 | OQ4, OQ5 | Code done; deploy pending |
+| 2 | App shell and deploy | 1 | OQ4, OQ5 | Done |
 | 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Not started |
 | 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Not started |
 | 5 | Home and car details | 2, 3 | — | Not started |
@@ -155,5 +155,6 @@ Roughly in priority order. Nothing here is in scope without explicit approval.
 - **2026-10-29 — Session 2 (App shell and deploy), code part.** OQ4 decided: Netlify (D33). OQ5 decided: hash routing with an in-house router (D34). Added src/domain/routes.ts (+ tests), src/ui/{Header,PlaceholderPage,useRoute}.tsx, and 
 etlify.toml (build 
 pm run check, publish dist); no new dependencies. Verified locally: 
-pm run check passes; the three searches print nothing (run with --untracked before the first commit); all seven routes show their Hebrew title on direct load and after reload, unknown routes show Home, header links navigate; at 360×800 and 1280×800 scrollWidth <= innerWidth, dir is tl, and there are no console errors. State-survives-reload is not applicable (no state yet). **Pending:** product owner connects the repo to Netlify; then check the build log shows 
+pm run check passes; the three searches print nothing (run with --untracked before the first commit); all seven routes show their Hebrew title on direct load and after reload, unknown routes show Home, header links navigate; at 360×800 and 1280×800 scrollWidth <= innerWidth, dir is 
+tl, and there are no console errors. State-survives-reload is not applicable (no state yet). **Pending:** product owner connects the repo to Netlify; then check the build log shows 
 pm run check running the tests and open every route on the live URL.
