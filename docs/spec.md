@@ -98,8 +98,8 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 
 Content is drafted in session 4 and reviewed by the product owner; it lives in a static data file, not in this document.
 
-- Draft categories, in order: history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
-- Expected size: roughly 25–35 built-in items.
+- Categories, in order (final, D39): history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
+- Size: 30 built-in items, 5 per category.
 - Israel-specific topics include: test (טסט), number of previous owners (יד), original ownership (מקוריות), ex-leasing or rental use, liens (שעבוד), and professional inspection at a מכון.
 - Each item has: a stable ID, a category, a question, and a "why this matters" hint written for non-experts in plain Hebrew.
 
