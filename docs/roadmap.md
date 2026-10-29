@@ -2,7 +2,7 @@
 
 Living document. Update it at the end of every session: session status, session log, and open questions.
 
-**Current status:** Session 2 code is done and verified locally: header, seven placeholder routes, and `netlify.toml`. Waiting for the product owner to connect the repo to Netlify; session 2 closes after the live URL is checked. Then session 3 (data model and storage).
+**Current status:** Session 3 (data model and storage) code is done and verified locally: types, storage module, car details validation. Session 2's live-URL check (build log shows `npm run check`, every route opens) is still to be recorded in the session log. Next: session 4 (checklist content) and session 5.
 
 ## How sessions work
 
@@ -28,7 +28,7 @@ Pure logic (storage, validation, progress, summary, share encoding) lives in fra
 | 0 | Repo docs and workflow | — | — | Done |
 | 1 | Toolchain | 0 | OQ8 | Done |
 | 2 | App shell and deploy | 1 | OQ4, OQ5 | Done |
-| 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Not started |
+| 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Done |
 | 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Not started |
 | 5 | Home and car details | 2, 3 | — | Not started |
 | 6 | Checklist screen | 4, 5 | — | Not started |
@@ -122,14 +122,14 @@ Sessions 1–8 deliver a product usable on a real car. Sessions 9–10 add archi
 | ID | Question | Recommendation | Owner | Decide by |
 |---|---|---|---|---|
 | OQ1 | Final checklist items, categories, hint wording, and tone | AI drafts, product owner reviews | Both | Session 4 |
-| OQ2 | Is iOS Safari's ~7-day storage eviction acceptable for the MVP? | Accept it, add a short note on Home, request persistent storage with `navigator.storage.persist()` (best effort), and make JSON backup (or "share link as backup") the first post-MVP item | Product owner | Before session 3 |
+| OQ2 | Is iOS Safari's ~7-day storage eviction acceptable for the MVP? (**Decided 2026-10-29: accepted, D35**) | Accept it, add a short note on Home, request persistent storage with `navigator.storage.persist()` (best effort), and make JSON backup (or "share link as backup") the first post-MVP item | Product owner | Before session 3 |
 | OQ3 | Compression approach and link-length warning threshold | Use the browser's built-in `CompressionStream` with base64url encoding (no dependency); a short spike measures real link lengths with maximum-length notes to set the threshold | AI + product owner | Start of session 10 |
 | OQ4 | Netlify vs Vercel vs Cloudflare Pages (**Decided 2026-10-29: Netlify, D33**) | Whichever the product owner has an account on; they are equivalent for a static SPA. Use `npm run check` as the build command | Product owner | Before session 2 |
 | OQ5 | Routing: path routing with SPA rewrite and `/shared#data`, or hash routing (**Decided 2026-10-29: hash routing, D34**) | Hash routing (`#/checklist`, `#/shared/<data>`) with a small in-house router: no dependency and no host rewrite config. Alternative: path routing with React Router and a host rewrite rule | AI + product owner | Before session 2 |
 | OQ6 | Should marking an item *Unknown* suggest turning on the follow-up flag? | Keep them independent for now | Product owner | After real use |
-| OQ7 | Confirm session 0 clarifications: general notes limit of 1,000 characters, "All answers by category" in the summary (D22), explicit Save on the car details form (D23) | Accept all three | Product owner | Before session 3 |
+| OQ7 | Confirm session 0 clarifications: general notes limit of 1,000 characters, "All answers by category" in the summary (D22), explicit Save on the car details form (D23) (**Decided 2026-10-29: all three accepted, D36**) | Accept all three | Product owner | Before session 3 |
 | OQ8 | Linter (**Decided 2026-10-29: oxlint, D31**) | oxlint: one dependency, works with TypeScript 7, includes the React hooks rules. ESLint's TypeScript plugin (`typescript-eslint`) requires TypeScript below 6.1. Alternative: no linter, so `check` runs typecheck, tests, and build only | Product owner | Before session 1 |
-| OQ9 | Storage error behavior (AC-2.2) | Corrupt data or unknown version: blocking Hebrew error with "Delete data and start over" behind a confirmation; raw data stays untouched until then. Storage unavailable: blocking message on app screens; shared links still work. Storage full on write: non-blocking error; the change stays on screen but is marked unsaved | Product owner | Before session 3 |
+| OQ9 | Storage error behavior (AC-2.2) (**Decided 2026-10-29: accepted as recommended, D37**) | Corrupt data or unknown version: blocking Hebrew error with "Delete data and start over" behind a confirmation; raw data stays untouched until then. Storage unavailable: blocking message on app screens; shared links still work. Storage full on write: non-blocking error; the change stays on screen but is marked unsaved | Product owner | Before session 3 |
 
 ## Post-MVP backlog
 
@@ -158,3 +158,4 @@ pm run check, publish dist); no new dependencies. Verified locally:
 pm run check passes; the three searches print nothing (run with --untracked before the first commit); all seven routes show their Hebrew title on direct load and after reload, unknown routes show Home, header links navigate; at 360×800 and 1280×800 scrollWidth <= innerWidth, dir is 
 tl, and there are no console errors. State-survives-reload is not applicable (no state yet). **Pending:** product owner connects the repo to Netlify; then check the build log shows 
 pm run check running the tests and open every route on the live URL.
+- **2026-10-29 — Session 3 (Data model and storage).** OQ2, OQ7, OQ9 decided (D35–D37); data model and storage choices in D38. Added `src/domain/{types,limits,carDetails,storage}.ts` with tests (`carDetails.test.ts`, `storage.test.ts`); no new dependencies. Tests cover save/load round trip, empty storage, corrupt data (raw value unchanged), unknown version, unavailable storage (null, read error, write error), quota error on write (value kept), `clearStoredData`, every FR-3 rule, and AC-3.2. Verified: `npm run check` passes (94 tests); the three searches print nothing (run with `--untracked` before the commit); `package.json` unchanged. UI checks not applicable (no UI). Hebrew error messages, the Home eviction note, and the `navigator.storage.persist()` call belong to the UI sessions.
