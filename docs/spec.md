@@ -2,7 +2,7 @@
 
 > Source of truth for product behavior. Rationale for decisions lives in [decisions.md](decisions.md); progress, open questions, and the post-MVP backlog live in [roadmap.md](roadmap.md).
 >
-> Last updated: 2026-10-28 (session 0).
+> Last updated: 2026-10-29 (session 0 review).
 
 ## 1. Problem
 
@@ -96,7 +96,7 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 
 ### Built-in checklist structure
 
-Content is drafted in session 3 and reviewed by the product owner; it lives in a static data file, not in this document.
+Content is drafted in session 4 and reviewed by the product owner; it lives in a static data file, not in this document.
 
 - Draft categories, in order: history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
 - Expected size: roughly 25–35 built-in items.
@@ -118,7 +118,17 @@ The Summary, Archived summary, and Shared view are **one summary view in three m
 
 **Dialogs:** confirm start new car, privacy warning before sharing, confirm delete (custom questions and archived cars).
 
-**Navigation:** a simple header with the app name, Current car, and Previous cars.
+**Navigation:** a simple header with the app name and "Current car" (both open Home) and "Previous cars" (D26).
+
+**Summary modes:**
+
+| Element | Active | Archived | Shared |
+|---|---|---|---|
+| Car details, status counts, Concerns, Unknowns, Follow-ups, All answers by category, general notes, disclaimer | Shown | Shown | Shown |
+| Decision and reason | Editable | Read-only | Read-only |
+| Unanswered count | With a link to the checklist | Count only | Count only |
+| "Shared snapshot from [date]" banner and a link to open CarCheck | — | — | Shown |
+| Actions | Share, Start new car | Share, Delete | — |
 
 ## 8. Functional requirements and acceptance criteria
 
@@ -126,14 +136,14 @@ The Summary, Archived summary, and Shared view are **one summary view in three m
 
 - FR-1.1 All UI text is Hebrew. The document root uses `lang="he"` and `dir="rtl"`.
 - FR-1.2 The layout is usable from 360px wide up to desktop.
-- FR-1.3 Numbers use he-IL formatting, e.g. `120,000 ק"מ` and `₪45,000`.
+- FR-1.3 Numbers and dates use `Intl` formatting with the `he-IL` locale, e.g. `120,000 ק"מ`, `45,000 ₪`, and `28.10.2026` (D24).
 - FR-1.4 User-entered text is rendered with `dir="auto"` so mixed Hebrew/English/numbers display correctly.
 - FR-1.5 The disclaimer is shown on Home when there is no active car, and in every summary mode.
 
 Acceptance criteria:
 
 - AC-1.1 No screen scrolls horizontally at 360px.
-- AC-1.2 Every UI string is Hebrew.
+- AC-1.2 Every UI string is Hebrew, except the app name "CarCheck" (D26).
 - AC-1.3 The disclaimer is visible on Home (no active car) and in active, archived, and shared summary modes.
 
 ### FR-2 Persistence
@@ -145,18 +155,20 @@ Acceptance criteria:
 Acceptance criteria:
 
 - AC-2.1 After answering items, adding custom questions, and editing details, a page reload restores exactly the same state.
-- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten.
+- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten. The exact behavior per case is decided in OQ9 (roadmap) before session 3.
 
 ### FR-3 Car details
 
 | Field | Hebrew label | Required | Validation |
 |---|---|---|---|
-| Make | יצרן | Yes | Non-empty after trimming |
-| Model | דגם | Yes | Non-empty after trimming |
+| Make | יצרן | Yes | Non-empty after trimming; up to 50 characters |
+| Model | דגם | Yes | Non-empty after trimming; up to 50 characters |
 | Year | שנת ייצור | No | Integer from 1950 to next calendar year |
 | Mileage (km) | קילומטראז' | No | Non-negative integer |
 | Asking price (₪) | מחיר מבוקש | No | Non-negative integer |
-| License plate | מספר רישוי | No | Free text |
+| License plate | מספר רישוי | No | Free text, up to 20 characters |
+
+Number fields drop commas, spaces, and `₪`; if anything other than digits remains, the field shows an inline Hebrew error (D25).
 
 Seller name and phone are not separate fields; users may write them in notes.
 
@@ -200,7 +212,7 @@ Acceptance criteria:
 
 Acceptance criteria:
 
-- AC-6.1 Status counts always add up to the total number of items (built-in plus custom).
+- AC-6.1 Status counts always add up to the number of items in that car's checklist (built-in plus custom).
 - AC-6.2 An item with status *OK* and the follow-up flag appears in Follow-ups and in All answers, but not in Concerns or Unknowns.
 - AC-6.3 A car with zero answers shows empty states for every list and the full unanswered count.
 
@@ -232,7 +244,7 @@ Acceptance criteria:
 - FR-9.1 Share is available for the active car and for archived cars.
 - FR-9.2 Before sharing, a privacy warning explains that the link contains all car details and notes, anyone with the link can read it, and it is a snapshot that won't update.
 - FR-9.3 The link carries a versioned, compressed snapshot in the URL **fragment**, so the hosting server never receives the data. The exact route depends on the routing decision (OQ5 in the roadmap).
-- FR-9.4 The snapshot contains: snapshot date, car details, decision and reason, general notes, status counts, and every answered item (status, note, flag). Built-in items are referenced by ID; custom questions include their text. Unanswered items are included only as a count.
+- FR-9.4 The snapshot contains: snapshot date, car details, decision and reason, general notes, every answered item (status, note, flag), and the number of unanswered items. Status counts are derived from these, not stored (D27). Built-in items are referenced by ID; custom questions include their text.
 - FR-9.5 Sharing uses `navigator.share` when available; otherwise it copies the link and shows "הקישור הועתק"; if copying fails, the link is shown in a selectable field.
 - FR-9.6 Above a length threshold (OQ3 in the roadmap), the user is warned that some apps may truncate the link, but can still share.
 - FR-9.7 The shared view never reads or writes `localStorage`.
@@ -254,16 +266,18 @@ Limits keep share links at a reasonable length.
 | Item note | 500 | Confirmed |
 | Custom question text | 200 | Confirmed |
 | Decision reason | 300 | Confirmed |
-| General notes | 1,000 | Proposed in session 0; confirm in session 4 |
+| Make, model | 50 each | Added in session 0 review (D25) |
+| License plate | 20 | Added in session 0 review (D25) |
+| General notes | 1,000 | Proposed in session 0; confirm in OQ7 before session 3 |
 
 ## 10. Edge cases
 
 | Area | Case | Expected handling |
 |---|---|---|
-| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten |
+| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten; details per case in OQ9 |
 | Storage | App open in two tabs | Last write wins. Documented limitation, no sync logic |
 | Storage | iOS Safari deletes site storage after about 7 days without a visit | Known MVP risk; see OQ2 in the roadmap |
-| Content | Built-in items change in a later version | Item IDs are never reused or deleted. Removed items are marked *retired*: hidden for new answers, still displayed wherever an answer or shared link already references them. New items appear as *Not answered* |
+| Content | Built-in items change in a later version | Item IDs are never reused or deleted. Removed items are marked *retired*: hidden for new answers, still displayed wherever an answer or shared link already references them. New items appear as *Not answered*. Built when the first item is retired; v1 ships with none (D28) |
 | Sharing | Web Share not supported (e.g. desktop Firefox) | Fall back to clipboard, then to a selectable link field |
 | Sharing | Very long link (many long notes) | Warn above the threshold, still allow sharing |
 | Sharing | Sender opens their own shared link | Read-only view with banner; local data untouched |

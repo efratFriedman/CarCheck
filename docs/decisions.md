@@ -34,3 +34,15 @@ Consistency fixes made while writing the spec. The product owner can still veto 
 
 - **D22 — The summary includes a collapsible "All answers by category" section.** Follows from D10 and D13: facts recorded in notes of *OK* items would otherwise be invisible in the summary, and shared links already carry all answered items.
 - **D23 — The car details form uses an explicit Save button; everything else autosaves.** Required-field validation and the "archive on save" rule (D06) need an explicit save action.
+
+## 2026-10-29 — Session 0 review
+
+Clarifications from reviewing the docs against the repo. The product owner can still veto D24–D28.
+
+- **D24 — Numbers and dates use `Intl` with the `he-IL` locale as-is:** `120,000 ק"מ`, `45,000 ₪` (the shekel sign follows the number), `28.10.2026`. No custom formatting code. Replaces the `₪45,000` example in FR-1.3. *Rejected:* custom formatting to put ₪ first.
+- **D25 — Car details limits and number input:** make and model up to 50 characters, license plate up to 20. Number fields drop commas, spaces, and `₪`; anything else that isn't a digit shows an inline error. Every free-text field that goes into a share link is now bounded (D14).
+- **D26 — Header: the app name and "Current car" link to Home; "Previous cars" links to the archive list.** The app name "CarCheck" is the only Latin UI string.
+- **D27 — Share snapshots don't store status counts;** the shared view derives them from the answered items and the unanswered count. Less data to keep consistent; AC-9.1 still holds.
+- **D28 — Retired-item handling (spec §10) is built when the first built-in item is retired.** v1 ships with none. Status counts add up to the items in that car's checklist.
+- **D29 — Agent instructions stay in `.github/copilot-instructions.md`; no AGENTS.md.** Confirms D21. *Rejected:* an AGENTS.md replacing or duplicating it.
+- **D30 — Every roadmap session has scope, non-goals, done-when criteria, and verification steps, and follows a shared Definition of done whose single gate is `npm run check`.** The old session 1 is split into Toolchain and App shell and deploy; the host (D18) is now picked before session 2. *Rejected:* separate plan files per session; a CI workflow (the host build runs `npm run check`).
