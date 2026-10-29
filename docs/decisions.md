@@ -51,3 +51,8 @@ Clarifications from reviewing the docs against the repo. The product owner can s
 
 - **D31 — Linter is oxlint** (OQ8), configured in `.oxlintrc.json` with the TypeScript and React plugins and the hooks rules. *Rejected:* `typescript-eslint` (needs TypeScript below 6.1); no linter.
 - **D32 — `@types/react` and `@types/react-dom` are dev dependencies,** required for React under TypeScript 7. No other dependencies beyond the session 1 scope.
+
+## 2026-10-29 — Session 2
+
+- **D33 — Host is Netlify** (OQ4), building with `npm run check` and publishing `dist` (configured in `netlify.toml`). This settles D18. *Rejected:* Vercel, Cloudflare Pages.
+- **D34 — Hash routing with a small in-house router** (OQ5): `#/`, `#/car`, `#/checklist`, `#/summary`, `#/archive`, `#/archive/<id>`, `#/shared/<data>`. Parsing lives in `src/domain/routes.ts`; unknown hashes render Home. No dependency and no host rewrite rule; the shared payload stays in the fragment. *Rejected:* path routing with React Router.

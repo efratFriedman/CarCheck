@@ -4,9 +4,9 @@ CarCheck is a small Hebrew (RTL), responsive web app that helps non-expert buyer
 
 CarCheck organizes information. It does **not** diagnose mechanical problems or decide whether a car is worth buying.
 
-**Status:** toolchain in place (session 1 done); next is session 2 (app shell and deploy). See [docs/roadmap.md](docs/roadmap.md).
+**Status:** app shell with hash routing in place (session 2 code done; deploy to Netlify pending). See [docs/roadmap.md](docs/roadmap.md).
 
-**Live app:** not deployed yet (planned for session 2).
+**Live app:** not deployed yet (Netlify, pending the product owner connecting the repo).
 
 ## Tech
 
