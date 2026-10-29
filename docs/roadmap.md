@@ -2,7 +2,7 @@
 
 Living document. Update it at the end of every session: session status, session log, and open questions.
 
-**Current status:** Session 2 code is done and verified locally: header, seven placeholder routes, and `netlify.toml`. Waiting for the product owner to connect the repo to Netlify; session 2 closes after the live URL is checked. Then session 3 (data model and storage).
+**Current status:** Session 2 done: header, seven placeholder routes with hash routing, and the app is live on Netlify at https://my-car-check.netlify.app/. Next is session 3 (data model and storage); it needs OQ2, OQ7, and OQ9 decided first.
 
 ## How sessions work
 
@@ -27,7 +27,7 @@ Pure logic (storage, validation, progress, summary, share encoding) lives in fra
 |---|---|---|---|---|
 | 0 | Repo docs and workflow | — | — | Done |
 | 1 | Toolchain | 0 | OQ8 | Done |
-| 2 | App shell and deploy | 1 | OQ4, OQ5 | Code done; deploy pending |
+| 2 | App shell and deploy | 1 | OQ4, OQ5 | Done |
 | 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Not started |
 | 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Not started |
 | 5 | Home and car details | 2, 3 | — | Not started |
@@ -157,3 +157,5 @@ etlify.toml (build
 pm run check, publish dist); no new dependencies. Verified locally: 
 pm run check passes; the three searches print nothing (run with --untracked before the first commit); all seven routes show their Hebrew title on direct load and after reload, unknown routes show Home, header links navigate; at 360×800 and 1280×800 scrollWidth <= innerWidth, dir is tl, and there are no console errors. State-survives-reload is not applicable (no state yet). **Pending:** product owner connects the repo to Netlify; then check the build log shows 
 pm run check running the tests and open every route on the live URL.
+- **2026-10-29 — Session 2 closed.** Netlify deploys main (site visitor protection turned off so the URL is public). Live URL https://my-car-check.netlify.app/: all seven routes show their Hebrew title on direct load and after reload, unknown routes show Home, at 360×800 and 1280×800 scrollWidth <= innerWidth, dir is tl, and there are no console errors. The product owner confirmed the Netlify build log shows 
+pm run check running the tests (27 passing).
