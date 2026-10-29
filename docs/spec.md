@@ -2,7 +2,7 @@
 
 > Source of truth for product behavior. Rationale for decisions lives in [decisions.md](decisions.md); progress, open questions, and the post-MVP backlog live in [roadmap.md](roadmap.md).
 >
-> Last updated: 2026-10-29 (session 0 review).
+> Last updated: 2026-10-29 (session 3).
 
 ## 1. Problem
 
@@ -155,7 +155,7 @@ Acceptance criteria:
 Acceptance criteria:
 
 - AC-2.1 After answering items, adding custom questions, and editing details, a page reload restores exactly the same state.
-- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten. The exact behavior per case is decided in OQ9 (roadmap) before session 3.
+- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten. The exact behavior per case is in D37.
 
 ### FR-3 Car details
 
@@ -268,15 +268,15 @@ Limits keep share links at a reasonable length.
 | Decision reason | 300 | Confirmed |
 | Make, model | 50 each | Added in session 0 review (D25) |
 | License plate | 20 | Added in session 0 review (D25) |
-| General notes | 1,000 | Proposed in session 0; confirm in OQ7 before session 3 |
+| General notes | 1,000 | Confirmed (D36) |
 
 ## 10. Edge cases
 
 | Area | Case | Expected handling |
 |---|---|---|
-| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten; details per case in OQ9 |
+| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten; details per case in D37 |
 | Storage | App open in two tabs | Last write wins. Documented limitation, no sync logic |
-| Storage | iOS Safari deletes site storage after about 7 days without a visit | Known MVP risk; see OQ2 in the roadmap |
+| Storage | iOS Safari deletes site storage after about 7 days without a visit | Known MVP risk, accepted (D35) |
 | Content | Built-in items change in a later version | Item IDs are never reused or deleted. Removed items are marked *retired*: hidden for new answers, still displayed wherever an answer or shared link already references them. New items appear as *Not answered*. Built when the first item is retired; v1 ships with none (D28) |
 | Sharing | Web Share not supported (e.g. desktop Firefox) | Fall back to clipboard, then to a selectable link field |
 | Sharing | Very long link (many long notes) | Warn above the threshold, still allow sharing |
