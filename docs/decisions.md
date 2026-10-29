@@ -46,3 +46,13 @@ Clarifications from reviewing the docs against the repo. The product owner can s
 - **D28 — Retired-item handling (spec §10) is built when the first built-in item is retired.** v1 ships with none. Status counts add up to the items in that car's checklist.
 - **D29 — Agent instructions stay in `.github/copilot-instructions.md`; no AGENTS.md.** Confirms D21. *Rejected:* an AGENTS.md replacing or duplicating it.
 - **D30 — Every roadmap session has scope, non-goals, done-when criteria, and verification steps, and follows a shared Definition of done whose single gate is `npm run check`.** The old session 1 is split into Toolchain and App shell and deploy; the host (D18) is now picked before session 2. *Rejected:* separate plan files per session; a CI workflow (the host build runs `npm run check`).
+
+## 2026-10-29 — Session 1
+
+- **D31 — Linter is oxlint** (OQ8), configured in `.oxlintrc.json` with the TypeScript and React plugins and the hooks rules. *Rejected:* `typescript-eslint` (needs TypeScript below 6.1); no linter.
+- **D32 — `@types/react` and `@types/react-dom` are dev dependencies,** required for React under TypeScript 7. No other dependencies beyond the session 1 scope.
+
+## 2026-10-29 — Session 2
+
+- **D33 — Host is Netlify** (OQ4), building with `npm run check` and publishing `dist` (configured in `netlify.toml`). This settles D18. *Rejected:* Vercel, Cloudflare Pages.
+- **D34 — Hash routing with a small in-house router** (OQ5): `#/`, `#/car`, `#/checklist`, `#/summary`, `#/archive`, `#/archive/<id>`, `#/shared/<data>`. Parsing lives in `src/domain/routes.ts`; unknown hashes render Home. No dependency and no host rewrite rule; the shared payload stays in the fragment. *Rejected:* path routing with React Router.

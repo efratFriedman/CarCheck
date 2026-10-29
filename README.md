@@ -4,13 +4,13 @@ CarCheck is a small Hebrew (RTL), responsive web app that helps non-expert buyer
 
 CarCheck organizes information. It does **not** diagnose mechanical problems or decide whether a car is worth buying.
 
-**Status:** product defined and docs reviewed; implementation starts with session 1 (toolchain). See [docs/roadmap.md](docs/roadmap.md).
+**Status:** app shell with hash routing in place (session 2 code done; deploy to Netlify pending). See [docs/roadmap.md](docs/roadmap.md).
 
-**Live app:** not deployed yet (planned for session 2).
+**Live app:** not deployed yet (Netlify, pending the product owner connecting the repo).
 
 ## Tech
 
-- Vite, TypeScript, Tailwind CSS (starter template); React and Vitest are added in session 1.
+- Vite, React, TypeScript, Tailwind CSS; Vitest for unit tests; oxlint for linting.
 - Data is stored in the browser (`localStorage`). No backend, no accounts.
 
 ## Development
@@ -18,11 +18,15 @@ CarCheck organizes information. It does **not** diagnose mechanical problems or 
 ```bash
 npm install
 npm run dev      # dev server at http://localhost:5173
-npm run build    # type-check and production build
-npm run preview  # preview the production build
+npm run typecheck # tsc
+npm run lint      # oxlint
+npm test          # Vitest unit tests
+npm run build     # production build
+npm run preview   # preview the production build
+npm run check     # typecheck, lint, test, build (the gate before every commit)
 ```
 
-`test`, `lint`, and `check` scripts are added in session 1; `npm run check` is the gate before every commit (see the Definition of done in [docs/roadmap.md](docs/roadmap.md)).
+See the Definition of done in [docs/roadmap.md](docs/roadmap.md).
 
 ## Docs
 
