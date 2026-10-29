@@ -12,9 +12,9 @@ CarCheck is a Hebrew (RTL), responsive web app that helps non-expert buyers in I
 
 ## Stack
 
-- Vite, React, TypeScript, Tailwind CSS; Vitest for unit tests. React and Vitest are added in session 1.
+- Vite, React, TypeScript, Tailwind CSS; Vitest for unit tests; oxlint for linting.
 - Static hosting on Netlify, Vercel, or Cloudflare Pages.
-- Commands: `npm run dev`, `npm run build`, `npm run preview`; `npm test` from session 1.
+- Commands: `npm run dev`, `npm run typecheck`, `npm run lint`, `npm test`, `npm run build`, `npm run preview`; `npm run check` runs typecheck, lint, test, and build.
 
 ## Product rules (must follow)
 
@@ -38,5 +38,5 @@ CarCheck is a Hebrew (RTL), responsive web app that helps non-expert buyers in I
 
 1. Work on one roadmap session at a time and say which one.
 2. Before coding, restate the session goal and done-when criteria, and ask about anything ambiguous, one question at a time.
-3. Before finishing, run `npm run build` (and `npm test` once it exists) and verify the relevant acceptance criteria.
+3. Before finishing, run `npm run check` and verify the relevant acceptance criteria.
 4. At the end, update [docs/roadmap.md](../docs/roadmap.md) (status, session log, open questions), add new decisions to [docs/decisions.md](../docs/decisions.md), and update [docs/spec.md](../docs/spec.md) if behavior changed.

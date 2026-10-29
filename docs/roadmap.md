@@ -2,7 +2,7 @@
 
 Living document. Update it at the end of every session: session status, session log, and open questions.
 
-**Current status:** Session 0 done: docs reviewed and the development workflow defined. The repo contains only the Vite + TypeScript + Tailwind starter template; application work starts with session 1.
+**Current status:** Session 1 done: React, Vitest, and oxlint are set up, the starter demo is removed, and `npm run check` passes. Next is session 2 (app shell and deploy).
 
 ## How sessions work
 
@@ -26,7 +26,7 @@ Pure logic (storage, validation, progress, summary, share encoding) lives in fra
 | # | Session | Depends on | Decide first | Status |
 |---|---|---|---|---|
 | 0 | Repo docs and workflow | — | — | Done |
-| 1 | Toolchain | 0 | OQ8 | Not started |
+| 1 | Toolchain | 0 | OQ8 | Done |
 | 2 | App shell and deploy | 1 | OQ4, OQ5 | Not started |
 | 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Not started |
 | 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Not started |
@@ -128,7 +128,7 @@ Sessions 1–8 deliver a product usable on a real car. Sessions 9–10 add archi
 | OQ5 | Routing: path routing with SPA rewrite and `/shared#data`, or hash routing | Hash routing (`#/checklist`, `#/shared/<data>`) with a small in-house router: no dependency and no host rewrite config. Alternative: path routing with React Router and a host rewrite rule | AI + product owner | Before session 2 |
 | OQ6 | Should marking an item *Unknown* suggest turning on the follow-up flag? | Keep them independent for now | Product owner | After real use |
 | OQ7 | Confirm session 0 clarifications: general notes limit of 1,000 characters, "All answers by category" in the summary (D22), explicit Save on the car details form (D23) | Accept all three | Product owner | Before session 3 |
-| OQ8 | Linter | oxlint: one dependency, works with TypeScript 7, includes the React hooks rules. ESLint's TypeScript plugin (`typescript-eslint`) requires TypeScript below 6.1. Alternative: no linter, so `check` runs typecheck, tests, and build only | Product owner | Before session 1 |
+| OQ8 | Linter (**Decided 2026-10-29: oxlint, D31**) | oxlint: one dependency, works with TypeScript 7, includes the React hooks rules. ESLint's TypeScript plugin (`typescript-eslint`) requires TypeScript below 6.1. Alternative: no linter, so `check` runs typecheck, tests, and build only | Product owner | Before session 1 |
 | OQ9 | Storage error behavior (AC-2.2) | Corrupt data or unknown version: blocking Hebrew error with "Delete data and start over" behind a confirmation; raw data stays untouched until then. Storage unavailable: blocking message on app screens; shared links still work. Storage full on write: non-blocking error; the change stays on screen but is marked unsaved | Product owner | Before session 3 |
 
 ## Post-MVP backlog
@@ -151,3 +151,4 @@ Roughly in priority order. Nothing here is in scope without explicit approval.
 - **2026-10-28 — Session 0.** Created README, AI instructions, spec, decision log, and roadmap. Added clarifications D22–D23 and OQ7. Awaiting product owner review; not yet committed.
 - **2026-10-28 — Commit `e1f1ed4`.** Committed the session 0 docs together with the Vite + TypeScript + Tailwind starter template (demo code, removed in session 1).
 - **2026-10-29 — Session 0 review.** Reviewed the docs against the repo. Restructured sessions: the old session 1 is split into Toolchain and App shell and deploy, and every session now has scope, non-goals, done-when, and verification, plus a shared Definition of done (D30). Spec clarifications D24–D28. Kept `.github/copilot-instructions.md` as the only agent instructions file (D29). Added OQ8 (linter) and OQ9 (storage errors).
+- **2026-10-29 — Session 1 (Toolchain).** OQ8 decided: oxlint (D31). Added React, React DOM, `@vitejs/plugin-react`, Vitest, oxlint, `@types/react`, `@types/react-dom` (D32); removed `autoprefixer`, `tailwind.config.js`, and the starter demo (including the Vite-logo favicon, replaced by a neutral one). Tailwind loads via `@import "tailwindcss";` through the existing PostCSS config. Scripts `typecheck`, `lint`, `test`, `build`, `check`. Created `src/domain` (`formatNumber` + test), `src/data`, `src/ui`; entry is `src/main.tsx`. Verified: `npm run check` passes (2 tests); the three searches print nothing; at 360×800 and 1280×800 `dir` is `rtl`, `lang` is `he`, `scrollWidth <= innerWidth`, and there are no console errors. State-survives-reload is not applicable (no state yet).
