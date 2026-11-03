@@ -28,6 +28,32 @@ npm run check     # typecheck, lint, test, build (the gate before every commit)
 
 See the Definition of done in [docs/roadmap.md](docs/roadmap.md).
 
+## Project structure
+
+```text
+src/
+├── main.tsx          # entry point
+├── app/              # root component and the storage gate
+├── pages/            # one component per route
+├── components/       # UI grouped by area
+│   ├── layout/       #   header
+│   ├── common/       #   shared building blocks (text fields, progress bar, disclaimer)
+│   ├── checklist/    #   checklist item card, custom questions
+│   ├── car/          #   car details helpers
+│   └── storage/      #   storage error screens
+├── hooks/            # React hooks (app data, routing)
+├── domain/           # framework-free logic, one folder per module + its test
+│   ├── answers/      #   answers.ts, answers.test.ts
+│   ├── …             #   car, carDetails, customQuestions, format,
+│   │                 #   persistentStorage, progress, routes, storage
+│   ├── limits.ts     #   length limits
+│   └── types.ts      #   shared data types
+├── data/             # built-in checklist content + tests
+└── styles/           # global CSS (Tailwind)
+```
+
+Unit tests sit next to the file they test (`*.test.ts`).
+
 ## Docs
 
 | Doc | Purpose |

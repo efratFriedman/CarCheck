@@ -1,5 +1,5 @@
-import { LIMITS } from './limits'
-import type { CarDetails } from './types'
+import { LIMITS } from '../limits'
+import type { CarDetails } from '../types'
 
 export interface CarDetailsInput {
   make: string

@@ -1,5 +1,5 @@
-import type { CarDetailsInput } from './carDetails'
-import type { Car, CarDetails } from './types'
+import type { CarDetailsInput } from '../carDetails/carDetails'
+import type { Car, CarDetails } from '../types'
 
 export function createCar(details: CarDetails, id: string, now: Date): Car {
   return {

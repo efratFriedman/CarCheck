@@ -8,7 +8,7 @@ import {
   saveData,
   type StorageLike,
 } from './storage'
-import type { ArchivedCar, Car, StoredData } from './types'
+import type { ArchivedCar, Car, StoredData } from '../types'
 
 class MemoryStorage implements StorageLike {
   items = new Map<string, string>()

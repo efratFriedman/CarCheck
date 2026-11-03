@@ -82,7 +82,7 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 | Active car | The single car currently being evaluated; fully editable | — |
 | Archived car | A previous car; read-only | — |
 | Built-in item | A checklist question that ships with the app; has a stable ID | — |
-| Custom question | A user-added question that belongs to the active car only | category: השאלות שלי *(proposed)* |
+| Custom question | A user-added question that belongs to the active car only | category: השאלות שלי |
 | Status: Not answered | Default status of every item | לא נענה *(proposed)* |
 | Status: OK | | תקין *(proposed)* |
 | Status: Concern | | חשש *(proposed)* |
@@ -99,7 +99,7 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 Content is drafted in session 4 and reviewed by the product owner; it lives in a static data file, not in this document.
 
 - Categories, in order (final, D39): history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
-- Size: 30 built-in items, 5 per category.
+- Size: 39 built-in items: 10 history, 6 paperwork, 8 maintenance, and 5 each for condition, test drive, and inspection (D43, D44); the content test allows 25–40.
 - Israel-specific topics include: test (טסט), number of previous owners (יד), original ownership (מקוריות), ex-leasing or rental use, liens (שעבוד), and professional inspection at a מכון.
 - Each item has: a stable ID, a category, a question, and a "why this matters" hint written for non-experts in plain Hebrew.
 
@@ -197,6 +197,7 @@ Acceptance criteria:
 - FR-5.1 Custom questions are added, edited, and deleted in "My questions", the last category. They belong to the active car only.
 - FR-5.2 Question text must be non-empty after trimming.
 - FR-5.3 Deleting a custom question requires confirmation and removes its answer.
+- FR-5.4 There is no limit on the number of custom questions per car. They appear in the order they were added (D45).
 
 Acceptance criteria:
 

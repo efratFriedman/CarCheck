@@ -1,10 +1,11 @@
-import type { Route } from '../domain/routes'
+import type { Route } from '../domain/routes/routes'
+import { Header } from '../components/layout/Header'
+import { useRoute } from '../hooks/useRoute'
+import { CarDetailsPage } from '../pages/CarDetailsPage'
+import { ChecklistPage } from '../pages/ChecklistPage'
+import { HomePage } from '../pages/HomePage'
+import { PlaceholderPage } from '../pages/PlaceholderPage'
 import { AppDataGate } from './AppDataGate'
-import { CarDetailsPage } from './CarDetailsPage'
-import { Header } from './Header'
-import { HomePage } from './HomePage'
-import { PlaceholderPage } from './PlaceholderPage'
-import { useRoute } from './useRoute'
 
 function Screen({ route }: { route: Route }) {
   switch (route.name) {
@@ -12,6 +13,8 @@ function Screen({ route }: { route: Route }) {
       return <HomePage />
     case 'car':
       return <CarDetailsPage />
+    case 'checklist':
+      return <ChecklistPage />
     default:
       return <PlaceholderPage route={route} />
   }
