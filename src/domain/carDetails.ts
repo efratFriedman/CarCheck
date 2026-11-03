@@ -20,7 +20,7 @@ export type CarDetailsResult =
 
 export type NumberInput = { kind: 'empty' } | { kind: 'invalid' } | { kind: 'number'; value: number }
 
-const MIN_YEAR = 1950
+export const MIN_YEAR = 1950
 
 // Drops commas, whitespace, and ₪; whatever is left must be digits only (D25).
 export function parseNumberInput(raw: string): NumberInput {

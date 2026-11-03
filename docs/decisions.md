@@ -66,3 +66,8 @@ Clarifications from reviewing the docs against the repo. The product owner can s
 ## 2026-10-29 — Session 4
 
 - **D39 — Built-in checklist content approved** (OQ1). 30 items, 5 in each of the six categories, in `src/data/checklist.ts` with category titles in `CATEGORIES`. Tone: friendly, plain, gender-neutral Hebrew with no direct-address imperatives, and deliberately probing questions that can surface flaws; hints explain why a question matters and never diagnose, score, or recommend (product rule 1). IDs are permanent and use the form `<prefix>-NN` (prefixes `history`, `paperwork`, `maintenance`, `condition`, `drive`, `inspection`; the test-drive category ID stays `testDrive`). *Rejected:* descriptive-slug IDs; sequential-number IDs.
+
+## 2026-10-29 — Session 5
+
+- **D40 — Session 5 includes the storage UI from D35 and D37:** blocking error screens (corrupt, unknown version, unavailable) with a confirmed *Delete data and start over* for the first two, the Home eviction note (both Home states), and a best-effort `navigator.storage.persist()` after a successful load. The storage gate is mounted for every route except the shared view, which never touches storage.
+- **D41 — Car details form behavior.** A successful Save goes to Home. Leaving the form with unsaved edits discards them silently, with no prompt. A failed write (storage full) keeps the data on screen, still goes to Home, and shows a non-blocking unsaved banner. Number fields are text inputs (`inputMode=numeric`) so commas and `₪` can be typed (D25). *Rejected:* a leave-confirmation dialog; staying on the form after Save.
