@@ -98,8 +98,8 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 
 Content is drafted in session 4 and reviewed by the product owner; it lives in a static data file, not in this document.
 
-- Draft categories, in order: history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
-- Expected size: roughly 25–35 built-in items.
+- Categories, in order (final, D39): history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
+- Size: 30 built-in items, 5 per category.
 - Israel-specific topics include: test (טסט), number of previous owners (יד), original ownership (מקוריות), ex-leasing or rental use, liens (שעבוד), and professional inspection at a מכון.
 - Each item has: a stable ID, a category, a question, and a "why this matters" hint written for non-experts in plain Hebrew.
 
@@ -109,7 +109,7 @@ The Summary, Archived summary, and Shared view are **one summary view in three m
 
 | # | Screen | Responsibility |
 |---|---|---|
-| 1 | **Home** (בית) | **No active car:** what CarCheck does, the disclaimer, a "Start evaluating a car" button, a link to previous cars. **Active car:** card with make, model, year, overall progress, and decision badge; actions: continue checklist, summary, edit details, start new car. |
+| 1 | **Home** (בית) | **No active car:** what CarCheck does, the disclaimer, a "Start evaluating a car" button, a link to previous cars. **Both states:** a short note that data lives in this browser only and may be lost in Safari on iPhone (D35). **Active car:** card with make, model, year, overall progress, and decision badge; actions: continue checklist, summary, edit details, start new car. |
 | 2 | **Car details** (פרטי הרכב) | Create and edit form with validation. Used both to start a car and to complete details later. |
 | 3 | **Checklist** (צ'קליסט) | Collapsible categories (accordion), each with its progress. Each item shows the question, an expandable "why this matters" hint, a 4-option status selector, a note, and a follow-up toggle. "My questions" is the last category, with add, edit, and delete. General notes for the car are at the bottom. |
 | 4 | **Summary** (סיכום), active mode | Car details, decision editor, status counts, concerns, unknowns, follow-ups, unanswered count with a link back to the checklist, all answers by category, general notes, disclaimer. Actions: Share, Start new car. |
@@ -177,6 +177,7 @@ Acceptance criteria:
 - AC-3.1 Saving without make or model shows an inline Hebrew error and saves nothing.
 - AC-3.2 Number fields accept input typed with commas or `₪` and normalize it to digits.
 - AC-3.3 Editing details never changes checklist answers.
+- After a successful Save, the app goes to Home. Leaving the form without saving discards the edits (D41).
 
 ### FR-4 Checklist
 

@@ -2,7 +2,7 @@
 
 Living document. Update it at the end of every session: session status, session log, and open questions.
 
-**Current status:** Session 3 (data model and storage) code is done and verified locally: types, storage module, car details validation. Session 2's live-URL check (build log shows `npm run check`, every route opens) is still to be recorded in the session log. Next: session 4 (checklist content) and session 5.
+**Current status:** Session 3 (data model and storage) code is done and verified locally: types, storage module, car details validation. Session 2's live-URL check (build log shows `npm run check`, every route opens) is still to be recorded in the session log. Session 4 (checklist content) is done: 30 built-in items, approved by the product owner (OQ1 closed). Session 5 (Home and car details) is done and verified locally; the live-URL check after deploy is still to be recorded. Next: session 6.
 
 ## How sessions work
 
@@ -29,8 +29,8 @@ Pure logic (storage, validation, progress, summary, share encoding) lives in fra
 | 1 | Toolchain | 0 | OQ8 | Done |
 | 2 | App shell and deploy | 1 | OQ4, OQ5 | Done |
 | 3 | Data model and storage | 1 | OQ2, OQ7, OQ9 | Done |
-| 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Not started |
-| 5 | Home and car details | 2, 3 | — | Not started |
+| 4 | Checklist content | 3 (item type); can run in parallel with 5 | OQ1 | Done |
+| 5 | Home and car details | 2, 3 | — | Done |
 | 6 | Checklist screen | 4, 5 | — | Not started |
 | 7 | Custom questions | 6 | — | Not started |
 | 8 | Summary and decision | 7 | — | Not started |
@@ -121,7 +121,7 @@ Sessions 1–8 deliver a product usable on a real car. Sessions 9–10 add archi
 
 | ID | Question | Recommendation | Owner | Decide by |
 |---|---|---|---|---|
-| OQ1 | Final checklist items, categories, hint wording, and tone | AI drafts, product owner reviews | Both | Session 4 |
+| OQ1 | Final checklist items, categories, hint wording, and tone (**Decided 2026-10-29: approved, D39**) | AI drafts, product owner reviews | Both | Session 4 |
 | OQ2 | Is iOS Safari's ~7-day storage eviction acceptable for the MVP? (**Decided 2026-10-29: accepted, D35**) | Accept it, add a short note on Home, request persistent storage with `navigator.storage.persist()` (best effort), and make JSON backup (or "share link as backup") the first post-MVP item | Product owner | Before session 3 |
 | OQ3 | Compression approach and link-length warning threshold | Use the browser's built-in `CompressionStream` with base64url encoding (no dependency); a short spike measures real link lengths with maximum-length notes to set the threshold | AI + product owner | Start of session 10 |
 | OQ4 | Netlify vs Vercel vs Cloudflare Pages (**Decided 2026-10-29: Netlify, D33**) | Whichever the product owner has an account on; they are equivalent for a static SPA. Use `npm run check` as the build command | Product owner | Before session 2 |
@@ -159,3 +159,5 @@ pm run check passes; the three searches print nothing (run with --untracked befo
 tl, and there are no console errors. State-survives-reload is not applicable (no state yet). **Pending:** product owner connects the repo to Netlify; then check the build log shows 
 pm run check running the tests and open every route on the live URL.
 - **2026-10-29 — Session 3 (Data model and storage).** OQ2, OQ7, OQ9 decided (D35–D37); data model and storage choices in D38. Added `src/domain/{types,limits,carDetails,storage}.ts` with tests (`carDetails.test.ts`, `storage.test.ts`); no new dependencies. Tests cover save/load round trip, empty storage, corrupt data (raw value unchanged), unknown version, unavailable storage (null, read error, write error), quota error on write (value kept), `clearStoredData`, every FR-3 rule, and AC-3.2. Verified: `npm run check` passes (94 tests); the three searches print nothing (run with `--untracked` before the commit); `package.json` unchanged. UI checks not applicable (no UI). Hebrew error messages, the Home eviction note, and the `navigator.storage.persist()` call belong to the UI sessions.
+- **2026-10-29 — Session 4 (Checklist content).** OQ1 decided (D39). Added `src/data/checklist.ts` (6 categories, 30 items, 5 each) and `src/data/checklist.test.ts`; no new dependencies. Tests cover item count (25–35), unique and well-formed IDs, one ID prefix per category, non-empty Hebrew question and hint, no duplicate questions, category order, and every category having items. Verified: `npm run check` passes (102 tests); the three searches print nothing (run with `--untracked` before the commit); `package.json` unchanged. UI checks not applicable (no UI). **Product owner approved the content as is.**
+- **2026-10-29 — Session 5 (Home and car details).** Decisions D40–D41. Added `src/domain/{car,persistentStorage}.ts` with tests (`createCar`, `updateCarDetails`, `detailsToInput`, best-effort `navigator.storage.persist()`), exported `MIN_YEAR`, and the UI: `AppDataGate` (loads storage once, blocks per D37, non-blocking unsaved banner), `StorageBlocked` (corrupt, unknown version, unavailable; delete behind a confirmation), `HomePage` (welcome, disclaimer, start button, link to previous cars, or active car card; eviction note), `CarDetailsPage` with `TextField` and Hebrew validation messages; no new dependencies. The shared route does not mount the gate, so it never touches storage. Verified: `npm run check` passes (109 tests); the three searches print nothing (run with `--untracked` before the commit); `package.json` unchanged. In the browser at 360×800 and 1280×800: `scrollWidth <= innerWidth`, `dir` is `rtl`, no console errors. AC-3.1 (empty save shows inline errors and stores nothing), AC-3.2 (`2,019`, ` 85,000 `, `₪45,000` stored as numbers), AC-3.3 (editing mileage left an answer unchanged), AC-1.3 (disclaimer on Home without a car), and reload persistence pass. Also checked: corrupt data left unchanged until a confirmed delete, unknown version, unavailable storage (no delete button, shared link still opens, zero storage calls on the shared route), and a quota error on save (card stays, unsaved banner). **Pending:** push and check the live URL.
