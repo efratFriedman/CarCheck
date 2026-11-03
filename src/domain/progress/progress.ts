@@ -1,4 +1,4 @@
-import type { Answer, CategoryId, ChecklistItem } from './types'
+import type { Answer, CategoryId, Car, ChecklistItem } from '../types'
 
 export interface Progress {
   answered: number
@@ -29,12 +29,19 @@ export function categoryProgress(
   )
 }
 
-export function overallProgress(
-  items: readonly ChecklistItem[],
-  answers: Record<string, Answer>,
-): Progress {
+type ProgressSource = Pick<Car, 'answers' | 'customQuestions'>
+
+// Custom questions count like built-in items (AC-5.1).
+export function overallProgress(items: readonly ChecklistItem[], car: ProgressSource): Progress {
   return calculateProgress(
-    items.map((item) => item.id),
-    answers,
+    [...items.map((item) => item.id), ...car.customQuestions.map((question) => question.id)],
+    car.answers,
+  )
+}
+
+export function customProgress(car: ProgressSource): Progress {
+  return calculateProgress(
+    car.customQuestions.map((question) => question.id),
+    car.answers,
   )
 }

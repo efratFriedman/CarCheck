@@ -1,5 +1,5 @@
-import { LIMITS } from '../domain/limits'
-import { MIN_YEAR, type CarDetailsError, type CarDetailsInput } from '../domain/carDetails'
+import { LIMITS } from '../../domain/limits'
+import { MIN_YEAR, type CarDetailsError, type CarDetailsInput } from '../../domain/carDetails/carDetails'
 
 const maxLengths: Partial<Record<keyof CarDetailsInput, number>> = {
   make: LIMITS.make,

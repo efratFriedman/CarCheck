@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { parseRoute, type Route } from '../domain/routes'
+import { parseRoute, type Route } from '../domain/routes/routes'
 
 function subscribe(onChange: () => void) {
   window.addEventListener('hashchange', onChange)

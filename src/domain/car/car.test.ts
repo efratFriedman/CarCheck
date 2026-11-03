@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createCar, detailsToInput, updateCarDetails } from './car'
-import type { Car, CarDetails } from './types'
+import type { Car, CarDetails } from '../types'
 
 const details: CarDetails = {
   make: 'מאזדה',

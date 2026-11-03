@@ -2,10 +2,11 @@ import { describe, expect, it } from 'vitest'
 import {
   calculateProgress,
   categoryProgress,
+  customProgress,
   getAnswer,
   overallProgress,
 } from './progress'
-import type { Answer, ChecklistItem } from './types'
+import type { Answer, ChecklistItem } from '../types'
 
 const items: ChecklistItem[] = [
   { id: 'history-01', category: 'history', question: 'ש1', hint: 'ה1' },
@@ -77,10 +78,36 @@ describe('categoryProgress and overallProgress', () => {
     const answers = { 'history-01': answer({ status: 'concern' }) }
     expect(categoryProgress(items, 'history', answers)).toEqual({ answered: 1, total: 2 })
     expect(categoryProgress(items, 'paperwork', answers)).toEqual({ answered: 0, total: 1 })
-    expect(overallProgress(items, answers)).toEqual({ answered: 1, total: 3 })
+    expect(overallProgress(items, { answers, customQuestions: [] })).toEqual({
+      answered: 1,
+      total: 3,
+    })
   })
 
   it('reports a category with no items as 0 of 0', () => {
     expect(categoryProgress(items, 'testDrive', {})).toEqual({ answered: 0, total: 0 })
+  })
+})
+
+describe('custom questions in progress (AC-5.1)', () => {
+  const customQuestions = [
+    { id: 'c1', text: 'א' },
+    { id: 'c2', text: 'ב' },
+  ]
+
+  it('adds custom questions to the overall total and answered count', () => {
+    const answers = { 'history-01': answer({ status: 'ok' }), c1: answer({ status: 'unknown' }) }
+    expect(overallProgress(items, { answers, customQuestions })).toEqual({ answered: 2, total: 5 })
+  })
+
+  it('reports custom progress on its own, and 0 of 0 with no questions', () => {
+    const answers = { c2: answer({ status: 'concern' }), 'history-01': answer({ status: 'ok' }) }
+    expect(customProgress({ answers, customQuestions })).toEqual({ answered: 1, total: 2 })
+    expect(customProgress({ answers, customQuestions: [] })).toEqual({ answered: 0, total: 0 })
+  })
+
+  it('does not count a note or follow-up flag alone', () => {
+    const answers = { c1: answer({ note: 'x', followUp: true }) }
+    expect(customProgress({ answers, customQuestions })).toEqual({ answered: 0, total: 2 })
   })
 })
