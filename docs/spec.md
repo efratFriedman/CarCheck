@@ -2,7 +2,7 @@
 
 > Source of truth for product behavior. Rationale for decisions lives in [decisions.md](decisions.md); progress, open questions, and the post-MVP backlog live in [roadmap.md](roadmap.md).
 >
-> Last updated: 2026-10-29 (session 0 review).
+> Last updated: 2026-10-29 (session 3).
 
 ## 1. Problem
 
@@ -98,8 +98,8 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 
 Content is drafted in session 4 and reviewed by the product owner; it lives in a static data file, not in this document.
 
-- Draft categories, in order: history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
-- Expected size: roughly 25–35 built-in items.
+- Categories, in order (final, D39): history and ownership, paperwork and legal, maintenance, visible condition, test drive, professional inspection. "My questions" is always last.
+- Size: 30 built-in items, 5 per category.
 - Israel-specific topics include: test (טסט), number of previous owners (יד), original ownership (מקוריות), ex-leasing or rental use, liens (שעבוד), and professional inspection at a מכון.
 - Each item has: a stable ID, a category, a question, and a "why this matters" hint written for non-experts in plain Hebrew.
 
@@ -109,7 +109,7 @@ The Summary, Archived summary, and Shared view are **one summary view in three m
 
 | # | Screen | Responsibility |
 |---|---|---|
-| 1 | **Home** (בית) | **No active car:** what CarCheck does, the disclaimer, a "Start evaluating a car" button, a link to previous cars. **Active car:** card with make, model, year, overall progress, and decision badge; actions: continue checklist, summary, edit details, start new car. |
+| 1 | **Home** (בית) | **No active car:** what CarCheck does, the disclaimer, a "Start evaluating a car" button, a link to previous cars. **Both states:** a short note that data lives in this browser only and may be lost in Safari on iPhone (D35). **Active car:** card with make, model, year, overall progress, and decision badge; actions: continue checklist, summary, edit details, start new car. |
 | 2 | **Car details** (פרטי הרכב) | Create and edit form with validation. Used both to start a car and to complete details later. |
 | 3 | **Checklist** (צ'קליסט) | Collapsible categories (accordion), each with its progress. Each item shows the question, an expandable "why this matters" hint, a 4-option status selector, a note, and a follow-up toggle. "My questions" is the last category, with add, edit, and delete. General notes for the car are at the bottom. |
 | 4 | **Summary** (סיכום), active mode | Car details, decision editor, status counts, concerns, unknowns, follow-ups, unanswered count with a link back to the checklist, all answers by category, general notes, disclaimer. Actions: Share, Start new car. |
@@ -155,7 +155,7 @@ Acceptance criteria:
 Acceptance criteria:
 
 - AC-2.1 After answering items, adding custom questions, and editing details, a page reload restores exactly the same state.
-- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten. The exact behavior per case is decided in OQ9 (roadmap) before session 3.
+- AC-2.2 If storage is unavailable or its data is corrupt, a Hebrew error message is shown, the app does not crash, and corrupt data is never silently overwritten. The exact behavior per case is in D37.
 
 ### FR-3 Car details
 
@@ -177,6 +177,7 @@ Acceptance criteria:
 - AC-3.1 Saving without make or model shows an inline Hebrew error and saves nothing.
 - AC-3.2 Number fields accept input typed with commas or `₪` and normalize it to digits.
 - AC-3.3 Editing details never changes checklist answers.
+- After a successful Save, the app goes to Home. Leaving the form without saving discards the edits (D41).
 
 ### FR-4 Checklist
 
@@ -268,15 +269,15 @@ Limits keep share links at a reasonable length.
 | Decision reason | 300 | Confirmed |
 | Make, model | 50 each | Added in session 0 review (D25) |
 | License plate | 20 | Added in session 0 review (D25) |
-| General notes | 1,000 | Proposed in session 0; confirm in OQ7 before session 3 |
+| General notes | 1,000 | Confirmed (D36) |
 
 ## 10. Edge cases
 
 | Area | Case | Expected handling |
 |---|---|---|
-| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten; details per case in OQ9 |
+| Storage | `localStorage` unavailable (some private modes), full, or corrupt | Hebrew error message, no crash, corrupt data never silently overwritten; details per case in D37 |
 | Storage | App open in two tabs | Last write wins. Documented limitation, no sync logic |
-| Storage | iOS Safari deletes site storage after about 7 days without a visit | Known MVP risk; see OQ2 in the roadmap |
+| Storage | iOS Safari deletes site storage after about 7 days without a visit | Known MVP risk, accepted (D35) |
 | Content | Built-in items change in a later version | Item IDs are never reused or deleted. Removed items are marked *retired*: hidden for new answers, still displayed wherever an answer or shared link already references them. New items appear as *Not answered*. Built when the first item is retired; v1 ships with none (D28) |
 | Sharing | Web Share not supported (e.g. desktop Firefox) | Fall back to clipboard, then to a selectable link field |
 | Sharing | Very long link (many long notes) | Warn above the threshold, still allow sharing |
