@@ -29,6 +29,7 @@ CarCheck is a Hebrew (RTL), responsive web app that helps non-expert buyers in I
 ## Engineering conventions
 
 - Keep pure logic (storage, migrations, summary calculations, share encoding/decoding, validation) in framework-free TypeScript modules with Vitest unit tests.
+- Folder layout (D46, D47): `src/domain` pure logic, one folder per module holding the module and its test (`src/domain/<name>/<name>.ts` + `<name>.test.ts`), with shared `types.ts` and `limits.ts` at the root; `src/data` built-in checklist; `src/app` root and storage gate; `src/pages` one component per route; `src/components/<area>` the rest of the UI (`common` for shared building blocks); `src/hooks`; `src/styles`. Tests sit next to their source file.
 - Keep components and files small and focused. Summary, archived summary, and shared view are one component with three modes.
 - Build mobile-first and check layouts at 360px and on desktop.
 - Ask before adding any dependency.

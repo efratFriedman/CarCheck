@@ -1,5 +1,5 @@
-import { formatNumber } from '../domain/format'
-import type { Progress } from '../domain/progress'
+import { formatNumber } from '../../domain/format/format'
+import type { Progress } from '../../domain/progress/progress'
 
 export function progressText({ answered, total }: Progress): string {
   return `${formatNumber(answered)} מתוך ${formatNumber(total)} נענו`

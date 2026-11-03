@@ -1,6 +1,6 @@
-import { LIMITS } from './limits'
-import { EMPTY_ANSWER, getAnswer } from './progress'
-import type { Answer, Car } from './types'
+import { LIMITS } from '../limits'
+import { EMPTY_ANSWER, getAnswer } from '../progress/progress'
+import type { Answer, Car } from '../types'
 
 function isEmpty(answer: Answer): boolean {
   return (

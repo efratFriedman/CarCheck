@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { updateAnswer, updateGeneralNotes } from './answers'
-import { createCar } from './car'
-import { LIMITS } from './limits'
-import type { Car } from './types'
+import { createCar } from '../car/car'
+import { LIMITS } from '../limits'
+import type { Car } from '../types'
 
 const car: Car = createCar(
   { make: 'מאזדה', model: '3', year: 2019, mileage: null, askingPrice: null, licensePlate: '' },

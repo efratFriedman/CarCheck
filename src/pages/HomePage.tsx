@@ -1,9 +1,9 @@
 import { CHECKLIST_ITEMS } from '../data/checklist'
-import { overallProgress } from '../domain/progress'
+import { overallProgress } from '../domain/progress/progress'
 import type { Car } from '../domain/types'
-import { Disclaimer } from './Disclaimer'
-import { ProgressBar, progressText } from './ProgressBar'
-import { useAppData } from './useAppData'
+import { Disclaimer } from '../components/common/Disclaimer'
+import { ProgressBar, progressText } from '../components/common/ProgressBar'
+import { useAppData } from '../hooks/useAppData'
 
 const buttonPrimary = 'inline-block rounded-md bg-slate-900 px-4 py-2 font-medium text-white'
 const buttonSecondary = 'inline-block rounded-md border border-slate-300 bg-white px-4 py-2'
@@ -46,7 +46,7 @@ function Welcome() {
 
 function ActiveCarCard({ car }: { car: Car }) {
   const { make, model, year } = car.details
-  const progress = overallProgress(CHECKLIST_ITEMS, car.answers)
+  const progress = overallProgress(CHECKLIST_ITEMS, car)
   return (
     <section aria-label="הרכב הנוכחי" className="rounded-lg border border-slate-200 bg-white p-4">
       <h2 dir="auto" className="text-xl font-bold">

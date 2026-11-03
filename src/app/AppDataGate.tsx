@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { requestPersistentStorage } from '../domain/persistentStorage'
+import { requestPersistentStorage } from '../domain/persistentStorage/persistentStorage'
 import {
   clearStoredData,
   getBrowserStorage,
   loadData,
   saveData,
   type LoadResult,
-} from '../domain/storage'
+} from '../domain/storage/storage'
 import type { StoredData } from '../domain/types'
-import { StorageBlocked } from './StorageBlocked'
-import { AppDataContext } from './useAppData'
+import { StorageBlocked } from '../components/storage/StorageBlocked'
+import { AppDataContext } from '../hooks/useAppData'
 
 // Loads stored data once and blocks the app screens when it can't be used (D37).
 // Not mounted on the shared view, which never touches local data.

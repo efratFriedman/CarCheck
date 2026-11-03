@@ -1,4 +1,4 @@
-import type { Route } from '../domain/routes'
+import type { Route } from '../domain/routes/routes'
 
 const titles: Record<Route['name'], string> = {
   home: 'בית',

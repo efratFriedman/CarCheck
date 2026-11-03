@@ -1,13 +1,13 @@
 import { useState, type FormEvent } from 'react'
-import { createCar, detailsToInput, updateCarDetails } from '../domain/car'
+import { createCar, detailsToInput, updateCarDetails } from '../domain/car/car'
 import {
   validateCarDetails,
   type CarDetailsInput,
-} from '../domain/carDetails'
-import { formatRoute } from '../domain/routes'
-import { carDetailsErrorMessage } from './carDetailsMessages'
-import { TextField } from './TextField'
-import { useAppData } from './useAppData'
+} from '../domain/carDetails/carDetails'
+import { formatRoute } from '../domain/routes/routes'
+import { carDetailsErrorMessage } from '../components/car/carDetailsMessages'
+import { TextField } from '../components/common/TextField'
+import { useAppData } from '../hooks/useAppData'
 
 const FIELD_ORDER: (keyof CarDetailsInput)[] = [
   'make',

@@ -82,7 +82,7 @@ Hebrew labels marked *proposed* are finalized during the UI sessions.
 | Active car | The single car currently being evaluated; fully editable | — |
 | Archived car | A previous car; read-only | — |
 | Built-in item | A checklist question that ships with the app; has a stable ID | — |
-| Custom question | A user-added question that belongs to the active car only | category: השאלות שלי *(proposed)* |
+| Custom question | A user-added question that belongs to the active car only | category: השאלות שלי |
 | Status: Not answered | Default status of every item | לא נענה *(proposed)* |
 | Status: OK | | תקין *(proposed)* |
 | Status: Concern | | חשש *(proposed)* |
@@ -197,6 +197,7 @@ Acceptance criteria:
 - FR-5.1 Custom questions are added, edited, and deleted in "My questions", the last category. They belong to the active car only.
 - FR-5.2 Question text must be non-empty after trimming.
 - FR-5.3 Deleting a custom question requires confirmation and removes its answer.
+- FR-5.4 There is no limit on the number of custom questions per car. They appear in the order they were added (D45).
 
 Acceptance criteria:
 

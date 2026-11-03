@@ -1,43 +1,54 @@
-import { useState } from 'react'
-import { LIMITS } from '../domain/limits'
-import type { Answer, ChecklistItem } from '../domain/types'
+import { useState, type ReactNode } from 'react'
+import { LIMITS } from '../../domain/limits'
+import type { Answer } from '../../domain/types'
+import { TextArea } from '../common/TextArea'
 import { STATUS_OPTIONS } from './statusOptions'
-import { TextArea } from './TextArea'
 
 export function ChecklistItemCard({
-  item,
+  id,
+  question,
+  hint,
   answer,
   onChange,
+  header,
 }: {
-  item: ChecklistItem
+  id: string
+  question: string
+  hint?: string
   answer: Answer
   onChange: (patch: Partial<Answer>) => void
+  // Replaces the question text, e.g. with an edit form for custom questions.
+  header?: ReactNode
 }) {
   const [hintOpen, setHintOpen] = useState(false)
-  const hintId = `${item.id}-hint`
+  const hintId = `${id}-hint`
 
   return (
     <li className="space-y-3 rounded-lg border border-slate-200 bg-white p-3">
-      <p dir="auto" className="font-medium">
-        {item.question}
-      </p>
+      {header ?? (
+        <p dir="auto" className="font-medium">
+          {question}
+        </p>
+      )}
 
-      <div>
-        <button
-          type="button"
-          aria-expanded={hintOpen}
-          aria-controls={hintId}
-          onClick={() => setHintOpen((open) => !open)}
-          className="text-sm text-slate-700 underline"
-        >
-          למה זה חשוב?
-        </button>
-        {hintOpen && (
-          <p id={hintId} className="mt-2 rounded-md bg-slate-50 p-2 text-sm text-slate-700">
-            {item.hint}
-          </p>
-        )}
-      </div>
+      {hint && (
+        <div>
+          <button
+            type="button"
+            aria-expanded={hintOpen}
+            aria-controls={hintId}
+            onClick={() => setHintOpen((open) => !open)}
+            className="text-sm text-slate-700 underline"
+          >
+            למה זה חשוב?
+          </button>
+          {hintOpen && (
+            <p id={hintId} className="mt-2 rounded-md bg-slate-50 p-2 text-sm text-slate-700">
+              {hint}
+            </p>
+          )}
+        </div>
+      )}
 
       <fieldset>
         <legend className="sr-only">סטטוס</legend>
@@ -49,7 +60,7 @@ export function ChecklistItemCard({
             >
               <input
                 type="radio"
-                name={`${item.id}-status`}
+                name={`${id}-status`}
                 value={option.value}
                 checked={answer.status === option.value}
                 onChange={() => onChange({ status: option.value })}
@@ -62,7 +73,7 @@ export function ChecklistItemCard({
       </fieldset>
 
       <TextArea
-        name={`${item.id}-note`}
+        name={`${id}-note`}
         label="הערה"
         value={answer.note}
         maxLength={LIMITS.note}

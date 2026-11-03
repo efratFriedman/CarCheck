@@ -5,7 +5,7 @@ import {
   type Car,
   type CarDetails,
   type StoredData,
-} from './types'
+} from '../types'
 
 export const STORAGE_KEY = 'carcheck:data'
 
