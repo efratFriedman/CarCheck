@@ -1,5 +1,8 @@
+import { CHECKLIST_ITEMS } from '../data/checklist'
+import { overallProgress } from '../domain/progress'
 import type { Car } from '../domain/types'
 import { Disclaimer } from './Disclaimer'
+import { ProgressBar, progressText } from './ProgressBar'
 import { useAppData } from './useAppData'
 
 const buttonPrimary = 'inline-block rounded-md bg-slate-900 px-4 py-2 font-medium text-white'
@@ -43,12 +46,17 @@ function Welcome() {
 
 function ActiveCarCard({ car }: { car: Car }) {
   const { make, model, year } = car.details
+  const progress = overallProgress(CHECKLIST_ITEMS, car.answers)
   return (
     <section aria-label="הרכב הנוכחי" className="rounded-lg border border-slate-200 bg-white p-4">
       <h2 dir="auto" className="text-xl font-bold">
         {make} {model}
       </h2>
       {year !== null && <p className="mt-1 text-slate-600">שנת ייצור: {year}</p>}
+      <div className="mt-3 space-y-1">
+        <p>{progressText(progress)}</p>
+        <ProgressBar progress={progress} label="התקדמות כללית" />
+      </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <a href="#/checklist" className={buttonPrimary}>
           המשך לצ'קליסט

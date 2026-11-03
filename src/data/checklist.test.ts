@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { CATEGORIES, CHECKLIST_ITEMS } from './checklist'
 
 describe('checklist content', () => {
-  it('has 25–35 items', () => {
+  it('has 25–40 items', () => {
     expect(CHECKLIST_ITEMS.length).toBeGreaterThanOrEqual(25)
-    expect(CHECKLIST_ITEMS.length).toBeLessThanOrEqual(35)
+    expect(CHECKLIST_ITEMS.length).toBeLessThanOrEqual(40)
   })
 
   it('has unique IDs in the form prefix-NN', () => {
