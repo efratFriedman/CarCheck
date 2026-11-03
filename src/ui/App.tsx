@@ -1,6 +1,7 @@
 import type { Route } from '../domain/routes'
 import { AppDataGate } from './AppDataGate'
 import { CarDetailsPage } from './CarDetailsPage'
+import { ChecklistPage } from './ChecklistPage'
 import { Header } from './Header'
 import { HomePage } from './HomePage'
 import { PlaceholderPage } from './PlaceholderPage'
@@ -12,6 +13,8 @@ function Screen({ route }: { route: Route }) {
       return <HomePage />
     case 'car':
       return <CarDetailsPage />
+    case 'checklist':
+      return <ChecklistPage />
     default:
       return <PlaceholderPage route={route} />
   }
