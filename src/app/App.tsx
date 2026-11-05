@@ -5,6 +5,7 @@ import { CarDetailsPage } from '../pages/CarDetailsPage'
 import { ChecklistPage } from '../pages/ChecklistPage'
 import { HomePage } from '../pages/HomePage'
 import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { SummaryPage } from '../pages/SummaryPage'
 import { AppDataGate } from './AppDataGate'
 
 function Screen({ route }: { route: Route }) {
@@ -15,6 +16,8 @@ function Screen({ route }: { route: Route }) {
       return <CarDetailsPage />
     case 'checklist':
       return <ChecklistPage />
+    case 'summary':
+      return <SummaryPage />
     default:
       return <PlaceholderPage route={route} />
   }
