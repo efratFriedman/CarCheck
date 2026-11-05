@@ -8,6 +8,7 @@ describe('parseRoute', () => {
     ['#/', { name: 'home' }],
     ['#/car', { name: 'car' }],
     ['#/car/', { name: 'car' }],
+    ['#/car/new', { name: 'newCar' }],
     ['#/checklist', { name: 'checklist' }],
     ['#/summary', { name: 'summary' }],
     ['#/archive', { name: 'archive' }],
@@ -19,7 +20,7 @@ describe('parseRoute', () => {
     expect(parseRoute(hash)).toEqual(route)
   })
 
-  it.each(['#/nope', '#/car/extra', '#/archive/a/b', '#checklist', '#/Checklist', '#//'])(
+  it.each(['#/nope', '#/car/extra', '#/car/new/x', '#/car/New', '#/archive/a/b', '#checklist', '#/Checklist', '#//'])(
     'sends unknown route %j to Home',
     (hash) => {
       expect(parseRoute(hash)).toEqual({ name: 'home' })
@@ -31,6 +32,7 @@ describe('formatRoute', () => {
   it.each<Route>([
     { name: 'home' },
     { name: 'car' },
+    { name: 'newCar' },
     { name: 'checklist' },
     { name: 'summary' },
     { name: 'archive' },

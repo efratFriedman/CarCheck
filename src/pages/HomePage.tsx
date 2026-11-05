@@ -4,6 +4,7 @@ import type { Car } from '../domain/types'
 import { Disclaimer } from '../components/common/Disclaimer'
 import { ProgressBar, progressText } from '../components/common/ProgressBar'
 import { DecisionBadge } from '../components/summary/DecisionBadge'
+import { StartNewCar } from '../components/archive/StartNewCar'
 import { useAppData } from '../hooks/useAppData'
 
 const buttonPrimary = 'inline-block rounded-md bg-slate-900 px-4 py-2 font-medium text-white'
@@ -71,6 +72,9 @@ function ActiveCarCard({ car }: { car: Car }) {
         <a href="#/car" className={buttonSecondary}>
           עריכת פרטים
         </a>
+      </div>
+      <div className="mt-3">
+        <StartNewCar />
       </div>
     </section>
   )

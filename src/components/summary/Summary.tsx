@@ -8,10 +8,16 @@ import { AllAnswers } from './AllAnswers'
 import { CarDetailsSummary } from './CarDetailsSummary'
 import { CATEGORY_ORDER } from './categories'
 import { DecisionEditor } from './DecisionEditor'
+import { DecisionView } from './DecisionView'
 import { EntryList, statusLabel } from './EntryList'
 
-// Archived and shared modes arrive in sessions 9 and 10 (spec §7 summary modes).
-export type SummaryMode = 'active'
+// The shared mode arrives in session 10 (spec §7 summary modes).
+export type SummaryMode = 'active' | 'archived'
+
+// Only the active mode can change the car; the archived mode has no editable inputs (AC-8.3).
+type SummaryProps =
+  | { mode: 'active'; car: Car; onCarChange: (car: Car) => void }
+  | { mode: 'archived'; car: Car }
 
 const COUNT_ORDER: readonly Status[] = ['ok', 'concern', 'unknown', 'notAnswered']
 
@@ -21,15 +27,8 @@ function unansweredText(count: number, total: number): string {
   return `${formatNumber(count)} שאלות מתוך ${formatNumber(total)} עדיין ללא מענה.`
 }
 
-export function Summary({
-  mode,
-  car,
-  onCarChange,
-}: {
-  mode: SummaryMode
-  car: Car
-  onCarChange: (car: Car) => void
-}) {
+export function Summary(props: SummaryProps) {
+  const { mode, car } = props
   const summary = buildSummary(CHECKLIST_ITEMS, CATEGORY_ORDER, car)
 
   return (
@@ -40,11 +39,13 @@ export function Summary({
         <h2 id="decision-title" className="text-xl font-bold">
           ההחלטה שלי
         </h2>
-        {mode === 'active' && (
+        {props.mode === 'active' ? (
           <DecisionEditor
             decision={car.decision}
-            onChange={(patch) => onCarChange(updateDecision(car, patch))}
+            onChange={(patch) => props.onCarChange(updateDecision(car, patch))}
           />
+        ) : (
+          <DecisionView decision={car.decision} />
         )}
       </section>
 

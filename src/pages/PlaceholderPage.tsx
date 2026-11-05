@@ -1,19 +1,8 @@
-import type { Route } from '../domain/routes/routes'
-
-const titles: Record<Route['name'], string> = {
-  home: 'בית',
-  car: 'פרטי הרכב',
-  checklist: "צ'קליסט",
-  summary: 'סיכום',
-  archive: 'רכבים קודמים',
-  archivedCar: 'רכב קודם',
-  shared: 'סיכום משותף',
-}
-
-export function PlaceholderPage({ route }: { route: Route }) {
+// Stands in for the shared view until session 10.
+export function PlaceholderPage({ title }: { title: string }) {
   return (
     <main className="mx-auto w-full max-w-xl p-4 sm:p-6">
-      <h1 className="text-2xl font-bold">{titles[route.name]}</h1>
+      <h1 className="text-2xl font-bold">{title}</h1>
       <p className="mt-2 text-slate-600">העמוד בבנייה.</p>
     </main>
   )

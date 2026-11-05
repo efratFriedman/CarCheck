@@ -1,3 +1,4 @@
+import { StartNewCar } from '../components/archive/StartNewCar'
 import { Summary } from '../components/summary/Summary'
 import { useAppData } from '../hooks/useAppData'
 
@@ -28,6 +29,9 @@ export function SummaryPage() {
         car={car}
         onCarChange={(next) => update({ ...data, activeCar: next })}
       />
+      <section aria-label="פעולות" className="border-t border-slate-200 pt-4">
+        <StartNewCar />
+      </section>
     </main>
   )
 }
