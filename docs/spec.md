@@ -245,17 +245,17 @@ Acceptance criteria:
 
 - FR-9.1 Share is available for the active car and for archived cars.
 - FR-9.2 Before sharing, a privacy warning explains that the link contains all car details and notes, anyone with the link can read it, and it is a snapshot that won't update.
-- FR-9.3 The link carries a versioned, compressed snapshot in the URL **fragment**, so the hosting server never receives the data. The exact route depends on the routing decision (OQ5 in the roadmap).
-- FR-9.4 The snapshot contains: snapshot date, car details, decision and reason, general notes, every answered item (status, note, flag), and the number of unanswered items. Status counts are derived from these, not stored (D27). Built-in items are referenced by ID; custom questions include their text.
+- FR-9.3 The link carries a versioned, compressed snapshot in the URL **fragment**, so the hosting server never receives the data. The route is `#/shared/<data>` (D34); the data is `v1.` followed by base64url of deflate-compressed JSON (D52).
+- FR-9.4 The snapshot contains: snapshot date, car details, decision and reason, general notes, every answered or flagged item (status, note, flag), and the number of unanswered items. Flagged items that are not answered are included so the recipient's Follow-ups list matches the sender's (D49, D53). Status counts are derived from these, not stored (D27). Built-in items are referenced by ID; custom questions include their text.
 - FR-9.5 Sharing uses `navigator.share` when available; otherwise it copies the link and shows "הקישור הועתק"; if copying fails, the link is shown in a selectable field.
-- FR-9.6 Above a length threshold (OQ3 in the roadmap), the user is warned that some apps may truncate the link, but can still share.
+- FR-9.6 Above a length threshold of 4,000 characters for the full link (D52), the user is warned that some apps may truncate the link, but can still share.
 - FR-9.7 The shared view never reads or writes `localStorage`.
 
 Acceptance criteria:
 
 - AC-9.1 Opened in a different browser with no local data, the link shows the same car details, decision, counts, and answered items as the sender's summary at the moment of sharing.
 - AC-9.2 Editing the car after sharing does not change what an already-shared link shows.
-- AC-9.3 Cancelling the privacy warning generates and shares nothing.
+- AC-9.3 Cancelling the privacy warning shares or copies nothing; the link built in memory while the warning is open is discarded (D53).
 - AC-9.4 A broken, tampered, or unknown-version link shows an error state with a link to Home.
 - AC-9.5 Opening a shared link leaves the opener's own CarCheck data untouched.
 

@@ -6,7 +6,7 @@ import { ArchivePage } from '../pages/ArchivePage'
 import { CarDetailsPage } from '../pages/CarDetailsPage'
 import { ChecklistPage } from '../pages/ChecklistPage'
 import { HomePage } from '../pages/HomePage'
-import { PlaceholderPage } from '../pages/PlaceholderPage'
+import { SharedPage } from '../pages/SharedPage'
 import { SummaryPage } from '../pages/SummaryPage'
 import { AppDataGate } from './AppDataGate'
 
@@ -37,7 +37,7 @@ export function App() {
     <>
       <Header />
       {route.name === 'shared' ? (
-        <PlaceholderPage title="סיכום משותף" />
+        <SharedPage key={route.data} data={route.data} />
       ) : (
         <AppDataGate>
           <Screen route={route} />

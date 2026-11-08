@@ -2,6 +2,7 @@ import { deleteArchivedCar, findArchivedCar } from '../domain/archive/archive'
 import { formatDate } from '../domain/format/format'
 import { formatRoute } from '../domain/routes/routes'
 import { DeleteArchivedCar } from '../components/archive/DeleteArchivedCar'
+import { ShareButton } from '../components/share/ShareButton'
 import { Summary } from '../components/summary/Summary'
 import { useAppData } from '../hooks/useAppData'
 
@@ -33,8 +34,11 @@ export function ArchivedCarPage({ id }: { id: string }) {
         עבר לרכבים קודמים ב־{formatDate(car.archivedAt)}. מוצג לקריאה בלבד.
       </p>
       <Summary mode="archived" car={car} />
-      <section aria-label="פעולות" className="border-t border-slate-200 pt-4">
-        <DeleteArchivedCar onConfirm={onDelete} />
+      <section aria-label="פעולות" className="space-y-3 border-t border-slate-200 pt-4">
+        <ShareButton car={car} />
+        <div>
+          <DeleteArchivedCar onConfirm={onDelete} />
+        </div>
       </section>
     </main>
   )
