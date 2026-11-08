@@ -1,6 +1,7 @@
 export type Route =
   | { name: 'home' }
   | { name: 'car' }
+  | { name: 'newCar' }
   | { name: 'checklist' }
   | { name: 'summary' }
   | { name: 'archive' }
@@ -9,6 +10,7 @@ export type Route =
 
 const simpleRoutes = {
   car: '#/car',
+  newCar: '#/car/new',
   checklist: '#/checklist',
   summary: '#/summary',
   archive: '#/archive',
@@ -22,6 +24,8 @@ export function parseRoute(hash: string): Route {
 
   switch (first) {
     case 'car':
+      if (tail === 'new') return { name: 'newCar' }
+      return tail === '' ? { name: first } : { name: 'home' }
     case 'checklist':
     case 'summary':
       return tail === '' ? { name: first } : { name: 'home' }

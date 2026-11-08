@@ -3,6 +3,8 @@ import { overallProgress } from '../domain/progress/progress'
 import type { Car } from '../domain/types'
 import { Disclaimer } from '../components/common/Disclaimer'
 import { ProgressBar, progressText } from '../components/common/ProgressBar'
+import { DecisionBadge } from '../components/summary/DecisionBadge'
+import { StartNewCar } from '../components/archive/StartNewCar'
 import { useAppData } from '../hooks/useAppData'
 
 const buttonPrimary = 'inline-block rounded-md bg-slate-900 px-4 py-2 font-medium text-white'
@@ -53,6 +55,9 @@ function ActiveCarCard({ car }: { car: Car }) {
         {make} {model}
       </h2>
       {year !== null && <p className="mt-1 text-slate-600">שנת ייצור: {year}</p>}
+      <div className="mt-2">
+        <DecisionBadge value={car.decision.value} />
+      </div>
       <div className="mt-3 space-y-1">
         <p>{progressText(progress)}</p>
         <ProgressBar progress={progress} label="התקדמות כללית" />
@@ -67,6 +72,9 @@ function ActiveCarCard({ car }: { car: Car }) {
         <a href="#/car" className={buttonSecondary}>
           עריכת פרטים
         </a>
+      </div>
+      <div className="mt-3">
+        <StartNewCar />
       </div>
     </section>
   )
