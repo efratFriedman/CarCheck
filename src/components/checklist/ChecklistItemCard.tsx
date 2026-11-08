@@ -1,6 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { LIMITS } from '../../domain/limits'
 import type { Answer } from '../../domain/types'
+import { CHOICE_CLASS } from '../common/choiceStyles'
 import { TextArea } from '../common/TextArea'
 import { STATUS_OPTIONS } from './statusOptions'
 
@@ -54,10 +55,7 @@ export function ChecklistItemCard({
         <legend className="sr-only">סטטוס</legend>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
           {STATUS_OPTIONS.map((option) => (
-            <label
-              key={option.value}
-              className="flex min-h-11 cursor-pointer items-center justify-center rounded-md border border-slate-300 bg-white px-2 text-center has-checked:border-slate-900 has-checked:bg-slate-900 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-slate-900"
-            >
+            <label key={option.value} className={CHOICE_CLASS}>
               <input
                 type="radio"
                 name={`${id}-status`}

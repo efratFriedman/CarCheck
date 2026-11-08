@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { createCar, detailsToInput, updateCarDetails } from '../domain/car/car'
+import { startNewCar } from '../domain/archive/archive'
+import { detailsToInput, updateCarDetails } from '../domain/car/car'
 import {
   validateCarDetails,
   type CarDetailsInput,
@@ -18,10 +19,12 @@ const FIELD_ORDER: (keyof CarDetailsInput)[] = [
   'licensePlate',
 ]
 
-export function CarDetailsPage() {
+// `isNew` (#/car/new) starts an empty form for a new car; saving it archives the current car (D06).
+export function CarDetailsPage({ isNew }: { isNew: boolean }) {
   const { data, update } = useAppData()
   const activeCar = data.activeCar
-  const [input, setInput] = useState<CarDetailsInput>(() => detailsToInput(activeCar?.details ?? null))
+  const editing = isNew ? null : activeCar
+  const [input, setInput] = useState<CarDetailsInput>(() => detailsToInput(editing?.details ?? null))
   const [errors, setErrors] = useState<Partial<Record<keyof CarDetailsInput, string>>>({})
 
   const set = (field: keyof CarDetailsInput) => (value: string) =>
@@ -43,16 +46,26 @@ export function CarDetailsPage() {
       if (first) document.getElementById(first)?.focus()
       return
     }
-    const car = activeCar
-      ? updateCarDetails(activeCar, result.details)
-      : createCar(result.details, crypto.randomUUID(), submittedAt)
-    update({ ...data, activeCar: car })
+    update(
+      editing
+        ? { ...data, activeCar: updateCarDetails(editing, result.details) }
+        : startNewCar(data, result.details, crypto.randomUUID(), submittedAt),
+    )
     window.location.hash = formatRoute({ name: 'home' })
   }
 
   return (
     <main className="mx-auto w-full max-w-xl p-4 sm:p-6">
       <h1 className="text-2xl font-bold">פרטי הרכב</h1>
+      {isNew && activeCar && (
+        <p className="mt-2 rounded-md border border-slate-300 bg-slate-50 p-3">
+          אחרי השמירה,{' '}
+          <bdi>
+            {activeCar.details.make} {activeCar.details.model}
+          </bdi>{' '}
+          יעבור לרכבים קודמים. ביטול משאיר אותו כרכב הנוכחי.
+        </p>
+      )}
       <form noValidate onSubmit={onSubmit} className="mt-4 space-y-4">
         <TextField name="make" label="יצרן" required value={input.make} error={message('make')} onChange={set('make')} />
         <TextField name="model" label="דגם" required value={input.model} error={message('model')} onChange={set('model')} />

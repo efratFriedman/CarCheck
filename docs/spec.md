@@ -69,7 +69,7 @@ Anything below requires explicit approval before implementation. Likely next fea
 - Editing, removing, or reordering built-in items; custom categories.
 - Any scoring, verdict, price evaluation, or diagnosis.
 - Government data lookup by license plate.
-- Photos and attachments; PDF/print export; JSON backup and import.
+- Photos and attachments; PDF/print export; copying the summary as text (D48); JSON backup and import.
 - Importing a shared car into the recipient's own CarCheck.
 - Languages other than Hebrew; dark mode; PWA/offline install; reminders; analytics.
 
