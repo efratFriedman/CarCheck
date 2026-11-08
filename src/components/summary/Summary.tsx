@@ -1,6 +1,7 @@
 import { CHECKLIST_ITEMS } from '../../data/checklist'
 import { updateDecision } from '../../domain/decision/decision'
 import { formatNumber } from '../../domain/format/format'
+import { summarizeSnapshot, type Snapshot } from '../../domain/snapshot/snapshot'
 import { buildSummary, type SummaryEntry } from '../../domain/summary/summary'
 import type { Car, Status } from '../../domain/types'
 import { Disclaimer } from '../common/Disclaimer'
@@ -11,13 +12,14 @@ import { DecisionEditor } from './DecisionEditor'
 import { DecisionView } from './DecisionView'
 import { EntryList, statusLabel } from './EntryList'
 
-// The shared mode arrives in session 10 (spec §7 summary modes).
-export type SummaryMode = 'active' | 'archived'
+// One summary view in three modes (spec §7, D20).
+export type SummaryMode = 'active' | 'archived' | 'shared'
 
-// Only the active mode can change the car; the archived mode has no editable inputs (AC-8.3).
+// Only the active mode can change the car; the archived and shared modes have no editable inputs (AC-8.3).
 type SummaryProps =
   | { mode: 'active'; car: Car; onCarChange: (car: Car) => void }
   | { mode: 'archived'; car: Car }
+  | { mode: 'shared'; snapshot: Snapshot }
 
 const COUNT_ORDER: readonly Status[] = ['ok', 'concern', 'unknown', 'notAnswered']
 
@@ -28,24 +30,28 @@ function unansweredText(count: number, total: number): string {
 }
 
 export function Summary(props: SummaryProps) {
-  const { mode, car } = props
-  const summary = buildSummary(CHECKLIST_ITEMS, CATEGORY_ORDER, car)
+  const { mode } = props
+  const { details, decision, generalNotes } = props.mode === 'shared' ? props.snapshot : props.car
+  const summary =
+    props.mode === 'shared'
+      ? summarizeSnapshot(CHECKLIST_ITEMS, CATEGORY_ORDER, props.snapshot)
+      : buildSummary(CHECKLIST_ITEMS, CATEGORY_ORDER, props.car)
 
   return (
     <div className="space-y-6">
-      <CarDetailsSummary details={car.details} />
+      <CarDetailsSummary details={details} />
 
       <section aria-labelledby="decision-title" className="space-y-3">
         <h2 id="decision-title" className="text-xl font-bold">
-          ההחלטה שלי
+          {mode === 'shared' ? 'החלטת השולח' : 'ההחלטה שלי'}
         </h2>
         {props.mode === 'active' ? (
           <DecisionEditor
-            decision={car.decision}
-            onChange={(patch) => props.onCarChange(updateDecision(car, patch))}
+            decision={decision}
+            onChange={(patch) => props.onCarChange(updateDecision(props.car, patch))}
           />
         ) : (
-          <DecisionView decision={car.decision} />
+          <DecisionView decision={decision} />
         )}
       </section>
 
@@ -100,11 +106,11 @@ export function Summary(props: SummaryProps) {
         <h2 id="general-notes-title" className="text-xl font-bold">
           הערות כלליות
         </h2>
-        {car.generalNotes.trim() === '' ? (
+        {generalNotes.trim() === '' ? (
           <p className="text-slate-600">לא נכתבו הערות כלליות.</p>
         ) : (
           <p dir="auto" className="whitespace-pre-wrap break-words">
-            {car.generalNotes}
+            {generalNotes}
           </p>
         )}
       </section>
