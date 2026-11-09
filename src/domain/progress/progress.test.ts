@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   calculateProgress,
+  categoryOverview,
   categoryProgress,
   customProgress,
   getAnswer,
@@ -109,5 +110,24 @@ describe('custom questions in progress (AC-5.1)', () => {
   it('does not count a note or follow-up flag alone', () => {
     const answers = { c1: answer({ note: 'x', followUp: true }) }
     expect(customProgress({ answers, customQuestions })).toEqual({ answered: 0, total: 2 })
+  })
+})
+
+describe('categoryOverview', () => {
+  it('lists categories in the given order with their progress, then custom questions last', () => {
+    const answers = { 'history-02': answer({ status: 'ok' }), c1: answer({ status: 'concern' }) }
+    const customQuestions = [{ id: 'c1', text: 'א' }]
+    expect(categoryOverview(items, ['paperwork', 'history'], { answers, customQuestions })).toEqual([
+      { id: 'paperwork', progress: { answered: 0, total: 1 } },
+      { id: 'history', progress: { answered: 1, total: 2 } },
+      { id: 'custom', progress: { answered: 1, total: 1 } },
+    ])
+  })
+
+  it('reports custom questions as 0 of 0 when there are none', () => {
+    expect(categoryOverview(items, ['history'], { answers: {}, customQuestions: [] })).toEqual([
+      { id: 'history', progress: { answered: 0, total: 2 } },
+      { id: 'custom', progress: { answered: 0, total: 0 } },
+    ])
   })
 })

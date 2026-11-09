@@ -70,6 +70,7 @@ export function CarDetailsPage({ isNew }: { isNew: boolean }) {
         <TextField name="make" label="יצרן" required value={input.make} error={message('make')} onChange={set('make')} />
         <TextField name="model" label="דגם" required value={input.model} error={message('model')} onChange={set('model')} />
         <TextField name="year" label="שנת ייצור" numeric value={input.year} error={message('year')} onChange={set('year')} />
+        <TextField name="hand" label="יד" value={input.hand} error={message('hand')} onChange={set('hand')} />
         <TextField name="mileage" label="קילומטראז'" numeric value={input.mileage} error={message('mileage')} onChange={set('mileage')} />
         <TextField name="askingPrice" label="מחיר מבוקש (₪)" numeric value={input.askingPrice} error={message('askingPrice')} onChange={set('askingPrice')} />
         <TextField name="licensePlate" label="מספר רישוי" value={input.licensePlate} error={message('licensePlate')} onChange={set('licensePlate')} />

@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+/* Design tokens taken from the mockups in docs/design. Components use these classes, never hex values. */
+@theme {
+  --font-heebo: "Heebo Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-navy: #0f2a44;
+  --color-navy-soft: #1c3d5e;
+  --color-teal: #108374;
+  --color-teal-dark: #0b5d53;
+  --color-teal-soft: #e3f5f2;
+  --color-amber: #e0960f;
+  --color-amber-dark: #8a5a00;
+  --color-amber-soft: #fff4dd;
+  --color-bg: #eef3f7;
+  --color-surface: #ffffff;
+  --color-border: #dfe6ee;
+  --color-ink: #14283c;
+  --color-muted: #5f6e7f;
+  --color-danger: #d64545;
+
+  --radius-card: 1.25rem;
+  --radius-control: 0.875rem;
+}

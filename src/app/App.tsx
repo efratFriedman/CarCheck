@@ -35,7 +35,8 @@ export function App() {
   const route = useRoute()
   return (
     <>
-      <Header />
+      {/* Restyled screens (AppShell) bring their own header. */}
+      {route.name !== 'home' && <Header />}
       {route.name === 'shared' ? (
         <SharedPage key={route.data} data={route.data} />
       ) : (

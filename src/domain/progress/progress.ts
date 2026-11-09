@@ -45,3 +45,23 @@ export function customProgress(car: ProgressSource): Progress {
     car.answers,
   )
 }
+
+export const CUSTOM_OVERVIEW_ID = 'custom'
+export type OverviewId = CategoryId | typeof CUSTOM_OVERVIEW_ID
+
+export interface CategoryOverview {
+  id: OverviewId
+  progress: Progress
+}
+
+// Built-in categories in the given order, then "My questions", which always comes last.
+export function categoryOverview(
+  items: readonly ChecklistItem[],
+  categoryIds: readonly CategoryId[],
+  car: ProgressSource,
+): CategoryOverview[] {
+  return [
+    ...categoryIds.map((id) => ({ id, progress: categoryProgress(items, id, car.answers) })),
+    { id: CUSTOM_OVERVIEW_ID, progress: customProgress(car) },
+  ]
+}

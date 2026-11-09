@@ -5,6 +5,7 @@ export interface CarDetailsInput {
   make: string
   model: string
   year: string
+  hand: string
   mileage: string
   askingPrice: string
   licensePlate: string

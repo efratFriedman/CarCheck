@@ -1,11 +1,22 @@
 import { formatNumber } from '../../domain/format/format'
 import type { Progress } from '../../domain/progress/progress'
+import { cn } from '../../lib/cn'
 
 export function progressText({ answered, total }: Progress): string {
   return `${formatNumber(answered)} מתוך ${formatNumber(total)} נענו`
 }
 
-export function ProgressBar({ progress, label }: { progress: Progress; label: string }) {
+export function ProgressBar({
+  progress,
+  label,
+  className,
+  indicatorClassName,
+}: {
+  progress: Progress
+  label: string
+  className?: string
+  indicatorClassName?: string
+}) {
   const percent = progress.total === 0 ? 0 : Math.round((progress.answered / progress.total) * 100)
   return (
     <div
@@ -15,9 +26,9 @@ export function ProgressBar({ progress, label }: { progress: Progress; label: st
       aria-valuemax={progress.total}
       aria-valuenow={progress.answered}
       aria-valuetext={progressText(progress)}
-      className="h-2 w-full overflow-hidden rounded-full bg-slate-200"
+      className={cn('h-2 w-full overflow-hidden rounded-full bg-slate-200', className)}
     >
-      <div className="h-full bg-slate-700" style={{ width: `${percent}%` }} />
+      <div className={cn('h-full bg-slate-700', indicatorClassName)} style={{ width: `${percent}%` }} />
     </div>
   )
 }
