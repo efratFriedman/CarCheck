@@ -29,7 +29,7 @@ Every page renders `<AppShell header={...} footer={...}>` (`src/components/layou
 - New screens must be added as a page in `src/pages`, a route in `App.tsx`, and use the shell.
 
 ## Design tokens
-Defined once in `src/index.css` under `@theme` (navy, teal, amber, bg, border, ink, muted, radii, Heebo font).
+Defined once in `src/styles/style.css` under `@theme` (navy, teal, amber, bg, border, ink, muted, radii, Heebo font). Restyled screens apply the font with `font-heebo` through `AppShell`.
 Use token classes (`bg-navy`, `text-teal-dark`, `border-border`…). Don't hard-code hex values in components.
 
 ## Data & persistence
